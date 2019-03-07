@@ -1,0 +1,24 @@
+{
+  "name": "pact",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:consumer": "mocha consumer/consumerPact.spec.js --timeout 10000",
+    "publish-pact": "node publishPact.js",
+    "test:provider": "mocha provider/providerPact.spec.js --timeout 10000"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.1"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact": "^8.0.2",
+    "@pact-foundation/pact-node": "^7.0.1",
+    "axios": "^0.18.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2"
+  }
+}

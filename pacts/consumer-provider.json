@@ -1,0 +1,95 @@
+{
+  "consumer": {
+    "name": "Consumer"
+  },
+  "provider": {
+    "name": "Provider"
+  },
+  "interactions": [
+    {
+      "description": "a request to list all movies",
+      "providerState": "i have a list of movies",
+      "request": {
+        "method": "GET",
+        "path": "/movies"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": [
+          {
+            "id": 1,
+            "name": "Movie 1",
+            "year": 1999
+          },
+          {
+            "id": 1,
+            "name": "Movie 1",
+            "year": 1999
+          },
+          {
+            "id": 1,
+            "name": "Movie 1",
+            "year": 1999
+          },
+          {
+            "id": 1,
+            "name": "Movie 1",
+            "year": 1999
+          },
+          {
+            "id": 1,
+            "name": "Movie 1",
+            "year": 1999
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "min": 5
+          },
+          "$.body[*].*": {
+            "match": "type"
+          },
+          "$.body[*].name": {
+            "match": "type"
+          },
+          "$.body[*].year": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get a movie that exist",
+      "providerState": "i have a list of movies",
+      "request": {
+        "method": "GET",
+        "path": "/movie/2"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request to get a movie that does not exist",
+      "providerState": "i have a list of movies",
+      "request": {
+        "method": "GET",
+        "path": "/movie/100"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

@@ -1,19 +1,19 @@
 # Pact-js-example
+
 An example test framework using PactJS to validate contract testing between consumer and provider.
 
 # Running the tests
+
 Install dependencies
 
 ```
 npm i
 ```
 
-export your Pact broker details:
+I am using Pactflow as my broker. To use Pactflow, register for their free developer plan and export your Pactflow API token:
 
 ```
-export PACT_URL=
-export PACT_USERNAME=
-export PACT_PASSWORD=
+export PACT_API_TOKEN=<API_TOKEN here>
 ```
 
 Run the consumer tests:

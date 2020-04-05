@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:consumer": "mocha consumer/consumerPact.spec.js --timeout 10000",
+    "test:consumer": "mocha consumer/consumer-contract.spec.js",
     "publish-pact": "node publishPact.js",
     "test:provider": "mocha provider/providerPact.spec.js --timeout 10000"
   },
@@ -15,10 +15,9 @@
     "joi": "^14.3.1"
   },
   "devDependencies": {
-    "@pact-foundation/pact": "^8.0.2",
-    "@pact-foundation/pact-node": "^7.0.1",
-    "axios": "^0.18.0",
+    "@pact-foundation/pact": "^9.9.2",
+    "axios": "^0.19.2",
     "chai": "^4.2.0",
-    "mocha": "^6.0.2"
+    "mocha": "^7.1.1"
   }
 }

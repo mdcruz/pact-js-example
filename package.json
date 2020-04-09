@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:consumer": "mocha consumer/consumer-contract.spec.js",
-    "publish-pact": "node publishPact.js",
-    "test:provider": "mocha provider/providerPact.spec.js --timeout 10000"
+    "test:consumer": "jest consumer/consumer-contract.spec.js --env=node",
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.0 --broker-base-url=$PACT_BROKER_URL --broker-token=$PACT_BROKER_TOKEN",
+    "test:provider": "jest provider/provider-contract.spec.js --testTimeout=10000"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,6 @@
   "devDependencies": {
     "@pact-foundation/pact": "^9.9.2",
     "axios": "^0.19.2",
-    "chai": "^4.2.0",
-    "mocha": "^7.1.1"
+    "jest": "^25.2.7"
   }
 }

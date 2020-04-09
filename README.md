@@ -1,6 +1,6 @@
-# Pact-js-example
+# Pact-js Contract Testing Example
 
-An example test framework using PactJS to validate contract testing between consumer and provider.
+An example test framework using Pact-js to validate contract testing between consumer and provider. The application that we are testing is a simple movies API which returns a list of movies.
 
 ## Running the tests
 

@@ -11,7 +11,10 @@ jobs:
           steps:
             - run: npm install
             - run: npm run test:consumer
+            - run: npm run publish:pact
+
 workflows:
     build-and-test:
       jobs:
-        - build-and-test
+        - build-and-test:
+            context: org-global

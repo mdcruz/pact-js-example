@@ -1,20 +1,25 @@
-version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+version: 2.0
 jobs:
-  build-and-test:
-    executor:
-      name: node/default
+  build:
+    docker:
+      - image: circleci/node:latest
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm run test:consumer
-            - run: npm run publish:pact
+      - run: 
+          name: Install project dependencies
+          command: npm install
+      - run:
+          name: Run consumer contract tests
+          command: npm run test:consumer
+      - run:
+          name: Publish contract to Pactflow
+          command: npm run publish:pact
+      - run:
+          name: Run provider contract tests
+          command: npm run test:provider
 
 workflows:
     build-and-test:
       jobs:
-        - build-and-test:
+        - build:
             context: org-global

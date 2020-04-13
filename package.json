@@ -6,7 +6,7 @@
   "scripts": {
     "test:consumer": "jest consumer/consumer-contract.spec.js --env=node",
     "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.0 --broker-base-url=$PACT_BROKER_URL --broker-token=$PACT_BROKER_TOKEN",
-    "test:provider": "jest provider/provider-contract.spec.js --testTimeout=10000"
+    "test:provider": "node provider/provider-service.js & jest provider/provider-contract.spec.js --testTimeout=10000"
   },
   "author": "",
   "license": "ISC",

@@ -1,10 +1,15 @@
 version: 2.1
 jobs:
-  build-and-test:
+  build:
     docker:
       - image: circleci/node:latest
     steps:
       - checkout
+      - run:
+          name: Setup environment variables
+          command: |
+            echo "export PACT_BROKER_TOKEN=$PACT_BROKER_TOKEN" >> $BASH_ENV
+            echo "export PACT_BROKER_URL=$PACT_BROKER_URL" >> $BASH_ENV
       - run: 
           name: Install project dependencies
           command: npm install
@@ -17,9 +22,3 @@ jobs:
       - run:
           name: Run provider contract tests
           command: npm run test:provider
-
-workflows:
-    build-and-test:
-      jobs:
-        - build-and-test:
-            context: org-global

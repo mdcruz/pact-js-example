@@ -1,0 +1,33 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Setup environment variables
+          command: |
+            echo "export PACT_BROKER_TOKEN=$PACT_BROKER_TOKEN" >> $BASH_ENV
+            echo "export PACT_BROKER_URL=$PACT_BROKER_URL" >> $BASH_ENV
+      - run: 
+          name: Install project dependencies
+          command: npm install
+      - run:
+          name: Run consumer contract tests
+          command: npm run test:consumer
+      - run:
+          name: Publish contract to Pactflow
+          command: npm run publish:pact
+      - run:
+          name: Run provider contract tests
+          command: npm run test:provider
+      - run:
+          name: Tag latest provider version
+          command: npm run create:provider:tag
+      - run:
+          name: Can I deploy consumer?
+          command: npm run can:i:deploy:consumer
+      - run:
+          name: Tag latest consumer version
+          command: npm run create:consumer:tag

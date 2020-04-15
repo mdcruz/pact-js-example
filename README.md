@@ -8,7 +8,7 @@ Install dependencies
 
 `npm i`
 
-I am using Pactflow as my broker. To use Pactflow, register for their free developer plan and export your Pactflow Broker URL and API token:
+I am using [Pactflow](https://pactflow.io/) as my broker. To use Pactflow , register for their free developer plan and export your Pactflow Broker URL and API token:
 
 ```
 export PACT_BROKER_URL=<PACT_BROKER_URL here>
@@ -23,10 +23,6 @@ Publish the contract to your pact broker:
 
 `npm run publish:contract`
 
-Start the actual provider:
-
-`node provider/provider-service.js`
-
-Run the provider tests:
+Start the actual provider and run the provider tests
 
 `npm run test:provider`

@@ -31,7 +31,7 @@ describe('Movies Service', () => {
               {
                 id: 1,
                 name: like('Movie 1'),
-                year: like(1999),
+                year: like(2008),
               },
               { min: 5 }
             ),
@@ -43,7 +43,7 @@ describe('Movies Service', () => {
     test('should return the correct data', async () => {
       const response = await fetchMovies(URL, PORT);
       expect(response[0].name).toBe('Movie 1');
-      expect(response[0].year).toBe(1999);
+      expect(response[0].year).toBe(2008);
     });
 
     afterEach(() => provider.verify());

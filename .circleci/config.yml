@@ -22,3 +22,12 @@ jobs:
       - run:
           name: Run provider contract tests
           command: npm run test:provider
+      - run:
+          name: Tag latest provider version
+          command: npm run create:provider:tag
+      - run:
+          name: Can I deploy consumer?
+          command: npm run can:i:deploy:consumer
+      - run:
+          name: Tag latest consumer version
+          command: npm run create:consumer:tag

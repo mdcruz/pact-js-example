@@ -21,7 +21,7 @@ Run the consumer tests:
 
 Publish the contract to your pact broker:
 
-`npm run publish:contract`
+`npm run publish:pact`
 
 Start the actual provider and run the provider tests
 

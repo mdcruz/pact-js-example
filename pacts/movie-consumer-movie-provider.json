@@ -1,9 +1,9 @@
 {
   "consumer": {
-    "name": "Consumer"
+    "name": "movie-consumer"
   },
   "provider": {
-    "name": "Provider"
+    "name": "movie-provider"
   },
   "interactions": [
     {

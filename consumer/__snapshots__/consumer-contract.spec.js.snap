@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Movies Service When a request to list all movies is made should return the correct data 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "Movie 1",
+    "year": 2008,
+  },
+  Object {
+    "id": 1,
+    "name": "Movie 1",
+    "year": 2008,
+  },
+  Object {
+    "id": 1,
+    "name": "Movie 1",
+    "year": 2008,
+  },
+  Object {
+    "id": 1,
+    "name": "Movie 1",
+    "year": 2008,
+  },
+  Object {
+    "id": 1,
+    "name": "Movie 1",
+    "year": 2008,
+  },
+]
+`;

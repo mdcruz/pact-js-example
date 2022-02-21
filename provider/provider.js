@@ -23,12 +23,12 @@ app.get('/movie/:id', (req, res) => {
 app.post('/movies', (req, res) => {
   const schema = Joi.object().keys({
     name: Joi.string().required(),
-    year: Joi.number().integer().min(1900).max(2019).required(),
+    year: Joi.number().integer().min(1900).max(2022).required(),
   });
 
   const result = Joi.validate(req.body, schema);
   const movie = {
-    id: movies[movies.length-1].id + 1,
+    id: movies[movies.length - 1].id + 1,
     name: req.body.name,
     year: req.body.year,
   };
@@ -36,11 +36,11 @@ app.post('/movies', (req, res) => {
   if (result.error) res.status(404).send(result.error.details[0]);
 
   if (getMovieByName(req.body.name)) {
-    res.send(`Movie ${req.body.name} already exists`)
+    res.send(`Movie ${req.body.name} already exists`);
   } else {
     movies.push(movie);
-    res.send(movie); 
-  } 
+    res.send(movie);
+  }
 });
 
 app.delete('/movie/:id', (req, res) => {

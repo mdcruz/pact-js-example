@@ -21,7 +21,7 @@ jobs:
           command: npm run publish:pact
       - run:
           name: Run provider contract tests
-          command: npm run test:provider
+          command: npm run start:and:test:provider
       - run:
           name: Tag latest provider version
           command: npm run create:provider:tag

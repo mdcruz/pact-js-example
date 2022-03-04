@@ -21,4 +21,4 @@ Publish the contract to your pact broker:
 `npm run publish:pact`
 
 Start the actual provider and run the provider tests
-`npm run test:provider`
+`npm run start:and:test:provider`

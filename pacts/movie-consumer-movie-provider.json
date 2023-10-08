@@ -2,9 +2,6 @@
   "consumer": {
     "name": "movie-consumer"
   },
-  "provider": {
-    "name": "movie-provider"
-  },
   "interactions": [
     {
       "description": "a request to list all movies",
@@ -13,9 +10,6 @@
         "path": "/movies"
       },
       "response": {
-        "status": 200,
-        "headers": {
-        },
         "body": [
           {
             "id": 1,
@@ -43,12 +37,13 @@
             "year": 2008
           }
         ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "matchingRules": {
           "$.body": {
+            "match": "type",
             "min": 5
-          },
-          "$.body[*].*": {
-            "match": "type"
           },
           "$.body[*].name": {
             "match": "type"
@@ -56,13 +51,24 @@
           "$.body[*].year": {
             "match": "type"
           }
-        }
+        },
+        "status": 200
       }
     }
   ],
   "metadata": {
+    "pact-js": {
+      "version": "12.1.0"
+    },
+    "pactRust": {
+      "ffi": "0.4.9",
+      "models": "1.1.11"
+    },
     "pactSpecification": {
       "version": "2.0.0"
     }
+  },
+  "provider": {
+    "name": "movie-provider"
   }
 }

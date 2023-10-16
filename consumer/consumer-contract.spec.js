@@ -1,45 +1,33 @@
-const { Pact } = require('@pact-foundation/pact');
-const { like, eachLike } = require('@pact-foundation/pact').Matchers;
-const { fetchMovies } = require('./consumer');
 const path = require('path');
-const port = 4000;
-const provider = new Pact({
-  consumer: 'movie-consumer',
-  provider: 'movie-provider',
-  port,
-  log: path.resolve(process.cwd(), 'logs', 'pact.log'),
+const { fetchMovies } = require('./consumer');
+const { PactV3, MatchersV3 } = require('@pact-foundation/pact');
+
+const provider = new PactV3({
   dir: path.resolve(process.cwd(), 'pacts'),
-  logLevel: 'INFO',
+  consumer: 'WebConsumer',
+  provider: 'MoviesAPI',
 });
+
+const EXPECTED_BODY = { id: 1, name: "My movie", year: 1999 };
+
 describe('Movies Service', () => {
-  describe('When a request to list all movies is made', () => {
-    beforeAll(() =>
-      provider.setup().then(() => {
-        provider.addInteraction({
-          uponReceiving: 'a request to list all movies',
-          withRequest: {
-            method: 'GET',
-            path: '/movies',
-          },
-          willRespondWith: {
-            status: 200,
-            body: eachLike(
-              {
-                id: 1,
-                name: like('Movie 1'),
-                year: like(2008),
-              },
-              { min: 5 }
-            ),
-          },
+  describe('When a GET request is made to /movies', () => {
+    test('it should return all movies', async () => {
+      provider
+        .uponReceiving('a request to all movies')
+        .withRequest({
+          method: 'GET',
+          path: '/movies',
+        })
+        .willRespondWith({
+          status: 200,
+          body: MatchersV3.eachLike(EXPECTED_BODY),
         });
-      })
-    );
-    test('should return the correct data', async () => {
-      const response = await fetchMovies(provider.mockService.baseUrl);
-      expect(response).toMatchSnapshot();
+
+      await provider.executeTest(async mockProvider => {
+        const movies = await fetchMovies(mockProvider.url);
+        expect(movies[0]).toEqual(EXPECTED_BODY);
+      });
     });
-    afterEach(() => provider.verify());
-    afterAll(() => provider.finalize());
   });
 });

@@ -1,16 +1,15 @@
 const { Verifier } = require('@pact-foundation/pact');
-const pactBrokerUrl = process.env.PACT_BROKER_URL;
-const providerBaseUrl =
-  process.env.PROVIDER_BASE_URL || 'http://localhost:3000/';
-const pactBrokerToken = process.env.PACT_BROKER_TOKEN;
+
+const providerBaseUrl = process.env.PROVIDER_BASE_URL || 'http://localhost:3001/';
 
 const options = {
-  provider: 'movie-provider',
+  provider: 'MoviesAPI',
   providerBaseUrl,
-  pactBrokerUrl,
-  pactBrokerToken,
+  pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
+  pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   providerVersion: '1.0.0',
   publishVerificationResult: true,
+  consumerVersionTags: ['main']
 };
 
 const verifier = new Verifier(options);

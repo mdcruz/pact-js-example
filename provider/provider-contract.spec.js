@@ -12,7 +12,7 @@ const options = {
   pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   providerVersion: '1.0.0',
-  publishVerificationResult: false,
+  publishVerificationResult: true,
   consumerVersionTags: ['main'],
   stateHandlers: {
     'Has a movie with specific ID': (parameters) => {

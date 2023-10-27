@@ -19,16 +19,8 @@ class Movie {
     this.movies.push(movie);
   }
 
-  clear() {
-    this.movies = [];
-  }
-
   getFirstMovie() {
     return this.movies[0];
-  }
-
-  getMoviesCount() {
-    return this.movies.length;
   }
 }
 

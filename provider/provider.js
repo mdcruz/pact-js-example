@@ -7,7 +7,7 @@ server.use(express.json());
 
 const movies = new Movies();
 
-// Load default data into a repository
+// Load default data into the Movies class
 const importData = () => {
   const data = require('.././data/movies.json');
   data.reduce((a, v) => {

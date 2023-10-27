@@ -35,6 +35,60 @@
         },
         "status": 200
       }
+    },
+    {
+      "description": "a request to all movies",
+      "providerStates": [
+        {
+          "name": "Has a movie with specific ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/movie/100"
+      },
+      "response": {
+        "body": {
+          "id": 100,
+          "name": "My movie",
+          "year": 1999
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.year": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
     }
   ],
   "metadata": {

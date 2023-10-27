@@ -1,4 +1,6 @@
-const app = require('./provider');
+const { server, importData } = require('./provider');
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+importData();
+
+server.listen(port, () => console.log(`Listening on port ${port}...`));

@@ -1,18 +1,28 @@
 const Joi = require('joi');
 const express = require('express');
-const { getMovies, getMovieById, getMovieByName } = require('./actions');
+const Movies = require('./movies')
 
-const app = express();
-app.use(express.json());
+const server = express();
+server.use(express.json());
 
-const movies = getMovies();
+const movies = new Movies();
 
-app.get('/movies', (req, res) => {
-  res.send(movies);
+// Load default data into a repository
+const importData = () => {
+  const data = require('.././data/movies.json');
+  data.reduce((a, v) => {
+    v.id = a + 1;
+    movies.insertMovie(v);
+    return a + 1;
+  }, 0);
+};
+
+server.get('/movies', (req, res) => {
+  res.send(movies.getMovies());
 });
 
-app.get('/movie/:id', (req, res) => {
-  const movie = getMovieById(req.params.id);
+server.get('/movie/:id', (req, res) => {
+  const movie = movies.getMovieById(req.params.id);
   if (!movie) {
     res.status(404).send('Movie not found');
   } else {
@@ -20,13 +30,13 @@ app.get('/movie/:id', (req, res) => {
   }
 });
 
-app.post('/movies', (req, res) => {
-  const schema = Joi.object().keys({
+server.post('/movies', (req, res) => {
+  const schema = Joi.object({
     name: Joi.string().required(),
-    year: Joi.number().integer().min(1900).max(2022).required(),
+    year: Joi.number().integer().min(1900).max(2023).required(),
   });
 
-  const result = Joi.validate(req.body, schema);
+  const result = schema.validate(req.body);
   const movie = {
     id: movies[movies.length - 1].id + 1,
     name: req.body.name,
@@ -35,16 +45,16 @@ app.post('/movies', (req, res) => {
 
   if (result.error) res.status(404).send(result.error.details[0]);
 
-  if (getMovieByName(req.body.name)) {
+  if (movies.getMovieByName(req.body.name)) {
     res.send(`Movie ${req.body.name} already exists`);
   } else {
-    movies.push(movie);
+    movies.insertMovie(movie);
     res.send(movie);
   }
 });
 
-app.delete('/movie/:id', (req, res) => {
-  const movie = getMovieById(req.params.id);
+server.delete('/movie/:id', (req, res) => {
+  const movie = movies.getMovieById(req.params.id);
   if (!movie) {
     res.status(404).send(`Movie ${req.params.id} not found`);
   } else {
@@ -54,4 +64,8 @@ app.delete('/movie/:id', (req, res) => {
   }
 });
 
-module.exports = app;
+module.exports = {
+  server,
+  importData,
+  movies,
+};

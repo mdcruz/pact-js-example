@@ -4,13 +4,19 @@ An example test framework using Pact-js to validate contract testing between con
 
 ## Running the Movies API locally
 
-Install dependencies
+Install dependencies:
 `npm i`
 
-Run the movies API
+Run the movies API:
 `npm run start:provider`
 
-## Running the tests
+## Running the GraphQL server
+
+On another terminal, run:
+
+`npm run start:graphql:server`
+
+## Running the web consumer tests
 
 I am using [Pactflow](https://pactflow.io/) as my broker. To use Pactflow , register for their free developer plan and export your Pactflow Broker URL and API token:
 
@@ -20,10 +26,10 @@ export PACT_API_TOKEN=<API_TOKEN here>
 ```
 
 Run the consumer tests:
-`npm run test:consumer`
+`npm run test:web:consumer`
 
 Publish the contract to your pact broker:
 `npm run publish:pact`
 
-Run the provider tests
+Run the provider tests:
 `npm run test:provider`

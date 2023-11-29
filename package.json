@@ -4,25 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:consumer": "jest consumer/consumer-contract.spec.js",
-    "can:i:deploy:consumer": "pact-broker can-i-deploy --pacticipant movie-consumer --version 1.0 --to staging --broker-base-url $PACT_BROKER_URL",
+    "test:web:consumer": "jest consumer-web/consumer-contract.spec.js",
+    "can:i:deploy:web:consumer": "pact-broker can-i-deploy --pacticipant movie-consumer-web --version 1.0 --to staging --broker-base-url $PACT_BROKER_URL",
     "can:i:deploy:provider": "pact-broker can-i-deploy --pacticipant movie-provider --version 1.0.0 --to staging --broker-base-url $PACT_BROKER_URL",
     "create:provider:tag": "pact-broker create-version-tag --pacticipant movie-provider --version 1.0.0 --tag staging --broker-base-url $PACT_BROKER_URL",
-    "create:consumer:tag": "pact-broker create-version-tag --pacticipant movie-consumer --version 1.0 --tag staging --broker-base-url $PACT_BROKER_URL",
+    "create:web:consumer:tag": "pact-broker create-version-tag --pacticipant movie-consumer-web --version 1.0 --tag staging --broker-base-url $PACT_BROKER_URL",
     "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.4 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN",
     "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
-    "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000"
+    "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000",
+    "start:graphql:server": "node consumer-graphql/graphql-server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-datasource-rest": "^3.7.0",
+    "apollo-server": "3.13.0",
+    "axios": "1.5.1",
     "express": "4.18.2",
     "joi": "17.10.2"
   },
   "devDependencies": {
     "@pact-foundation/pact": "12.1.0",
-    "axios": "1.5.1",
-    "cross-env": "^7.0.3",
+    "cross-env": "7.0.3",
     "jest": "29.7.0"
   }
 }

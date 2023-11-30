@@ -25,7 +25,7 @@ export PACT_BROKER_URL=<PACT_BROKER_URL here>
 export PACT_API_TOKEN=<API_TOKEN here>
 ```
 
-Run the consumer tests:
+Run the web consumer tests:
 `npm run test:web:consumer`
 
 Publish the contract to your pact broker:
@@ -33,3 +33,8 @@ Publish the contract to your pact broker:
 
 Run the provider tests:
 `npm run test:provider`
+
+## Running the GraphQL consumer tests
+
+Run the GraphQL consumer tests:
+`npm run test:graphql:consumer`

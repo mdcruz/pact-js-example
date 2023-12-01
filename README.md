@@ -20,7 +20,7 @@ export PACT_API_TOKEN=<API_TOKEN here>
 ```
 
 Run the consumer tests:
-`npm run test:consumer`
+`npm run test:web:consumer`
 
 Publish the contract to your pact broker:
 `npm run publish:pact`

@@ -37,7 +37,7 @@
       }
     },
     {
-      "description": "a request to all movies",
+      "description": "a request to a specific movie",
       "providerStates": [
         {
           "name": "Has a movie with specific ID",

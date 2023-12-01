@@ -9,7 +9,7 @@
     "can:i:deploy:provider": "pact-broker can-i-deploy --pacticipant movie-provider --version 1.0.0 --to staging --broker-base-url $PACT_BROKER_URL",
     "create:provider:tag": "pact-broker create-version-tag --pacticipant movie-provider --version 1.0.0 --tag staging --broker-base-url $PACT_BROKER_URL",
     "create:web:consumer:tag": "pact-broker create-version-tag --pacticipant movie-consumer-web --version 1.0 --tag staging --broker-base-url $PACT_BROKER_URL",
-    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.0 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN",
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.2 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN",
     "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
     "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000",
     "start:graphql:server": "npm run start:provider & node graphql/provider/graphql-server.js",

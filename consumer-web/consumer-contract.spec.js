@@ -44,7 +44,7 @@ describe('Movies Service', () => {
 
       provider
         .given('Has a movie with specific ID', { id: testId })
-        .uponReceiving('a request to all movies')
+        .uponReceiving('a request to a specific movie')
         .withRequest({
           method: 'GET',
           path: `/movie/${testId}`,

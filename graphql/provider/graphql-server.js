@@ -1,8 +1,10 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
+const gql = require('graphql-tag');
+
 const MovieAPI = require('./data-source.js');
 
 const typeDefs = gql`
-
   type Movie {
     id: Int
     name: String
@@ -26,16 +28,24 @@ const resolvers = {
   },
 }
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources: () => ({
-    movieApi: new MovieAPI()
-  })
-});
+async function startServer() {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
 
-const port = process.env.port || 9000;
+  const { url } = await startStandaloneServer(server, {
+    context: async () => {
+      const { cache } = server;
+      return {
+        dataSources: {
+          movieApi: new MovieAPI({ cache })
+        }
+      }
+    }
+  });
 
-server.listen(port).then(() => {
-  console.log(`server running 🚀 http://localhost:${port}/graphql`)
-});
+  console.log(`🚀 GraphQL server ready at ${url}`);
+}
+
+startServer();

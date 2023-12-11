@@ -1,10 +1,7 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
+const { RESTDataSource } = require('@apollo/datasource-rest');
 
 class MovieAPI extends RESTDataSource {
-  constructor() {
-    super();
-    this.baseURL = 'http://localhost:3001';
-  }
+  baseURL = 'http://localhost:3001';
 
   async getMovies() {
     return this.get('/movies');

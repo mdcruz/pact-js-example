@@ -1,13 +1,10 @@
-const { ApolloClient } = require('apollo-client');
-const { InMemoryCache } = require('apollo-cache-inmemory');
-const { gql } = require('graphql-tag');
-const { createHttpLink } = require('apollo-link-http');
+const { ApolloClient, InMemoryCache, gql, HttpLink } = require('@apollo/client');
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
     addTypename: false,
   }),
-  link: createHttpLink({
+  link: new HttpLink({
     fetch: require('node-fetch'),
     uri: 'http://127.0.0.1:4000/graphql',
   }),

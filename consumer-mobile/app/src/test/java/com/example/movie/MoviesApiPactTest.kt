@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith
     PactConsumerTestExt::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MoviesApiPactTest {
-    @Pact(provider = "movie-api", consumer = "movie-android-app")
+    @Pact(provider = "MoviesAPI", consumer = "movies-android-app")
     fun createPact(builder: PactDslWithProvider): V4Pact {
         val body: DslPart = PactDslJsonBody()
             .array("data")
@@ -42,7 +42,7 @@ class MoviesApiPactTest {
     }
 
     @Test
-    @PactTestFor(providerName="movie-api", pactMethod = "createPact", providerType = ProviderType.SYNCH)
+    @PactTestFor(providerName="MoviesAPI", pactMethod = "createPact", providerType = ProviderType.SYNCH)
     fun `should get movies response`(mockServer: MockServer) {
         var client = MovieClient(mockServer.getUrl())
         val response = runBlocking { client.getMovies()}

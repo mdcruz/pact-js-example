@@ -42,7 +42,7 @@ fun MovieListRow(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = movie.Name,
+                text = movie.name,
                 style = MaterialTheme.typography.bodyLarge,
                 overflow = TextOverflow.Ellipsis,
                 color = Color.White,

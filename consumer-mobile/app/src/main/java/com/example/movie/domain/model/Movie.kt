@@ -1,9 +1,17 @@
 package com.example.movie.domain.model
 
-import java.time.Year
-
 data class Movie(
-    val Id: Int,
-    val Name: String,
-    val Year: Int,
-)
+    val id: Int,
+    override val name: String,
+    override val year: Int,
+): IMovie
+
+data class Add(
+    override val name: String,
+    override val year: Int
+): IMovie
+
+interface IMovie {
+    val name: String
+    val year: Int
+}

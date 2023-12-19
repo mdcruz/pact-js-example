@@ -13,7 +13,7 @@ describe("Kafka handler", () => {
     consumer: "ConsumerEvent",
     dir: path.resolve(process.cwd(), "pacts"),
     pactfileWriteMode: "update",
-    provider: "MoviesAPI",
+    provider: "EventProducer",
     logLevel: "info",
   });
 
@@ -26,7 +26,7 @@ describe("Kafka handler", () => {
           year: like("2013")
         })
         .withMetadata({
-          "content-type": "application/json",
+          "contentType": "application/json",
           "kafka_topic": "movies",
         })
         .verify(asynchronousBodyHandler(movieEventHandler));

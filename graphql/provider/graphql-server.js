@@ -12,7 +12,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    movie(movieId: String!): Movie
+    movie(movieId: Int!): Movie
     movies: [Movie]
   }
 `;
@@ -36,10 +36,9 @@ async function startServer() {
 
   const { url } = await startStandaloneServer(server, {
     context: async () => {
-      const { cache } = server;
       return {
         dataSources: {
-          movieApi: new MovieAPI({ cache })
+          movieApi: new MovieAPI()
         }
       }
     }

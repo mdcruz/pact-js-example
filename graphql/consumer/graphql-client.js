@@ -29,6 +29,26 @@ const getMovies = async () => {
   return response;
 };
 
+const getMovieById = async () => {
+  const response = await client
+    .query({
+      query: gql`
+        query Movie($movieId: Int!) {
+          movie(movieId: $movieId) {
+            id
+            name
+            year
+          }
+        }
+      `,
+    })
+    .then((result) => result.data)
+    .catch((err) => err.response);
+
+  return response;
+};
+
 module.exports = {
-  getMovies
+  getMovies,
+  getMovieById,
 };

@@ -14,7 +14,12 @@
     "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000",
     "start:graphql:server": "npm run start:provider & node graphql/provider/graphql-server.js",
     "test:graphql:consumer": "jest graphql/consumer/graphql-client-contract.spec.js",
-    "test:graphql:provider": "npm run start:graphql:server & jest graphql/provider/graphql-server-contract.spec.js --testTimeout=20000"
+    "test:graphql:provider": "npm run start:graphql:server & jest graphql/provider/graphql-server-contract.spec.js --testTimeout=20000",
+    "start:kafka": "docker compose -f ./events/kafka-cluster.yml up -d",
+    "produce:kafka:message": "node events/event-producer/index.js",
+    "consume:kafka:message": "node events/consumer-event/server.js",
+    "test:event:consumer": "jest ./events/consumer-event/src/movies/movie.handler.pact.test.js",
+    "test:event:producer": "jest ./events/event-producer/src/movie.event.pact.test.js"
   },
   "author": "",
   "license": "ISC",

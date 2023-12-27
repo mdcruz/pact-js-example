@@ -26,7 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith
     PactConsumerTestExt::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MoviesApiPactTest {
-    @Pact(provider = "MoviesAPI", consumer = "movies-android-app")
+    @Pact(provider = "MoviesAPI", consumer = "MoviesAndroidApp")
     fun createPact(builder: PactDslWithProvider): V4Pact {
         val body: DslPart = PactDslJsonArray.arrayEachLike()
             .integerType("id")
@@ -53,7 +53,7 @@ class MoviesApiPactTest {
         assertTrue(response.isNotEmpty())
     }
 
-    @Pact(provider = "MoviesAPI", consumer = "movies-android-app")
+    @Pact(provider = "MoviesAPI", consumer = "MoviesAndroidApp")
     fun addMoviePact(builder: PactDslWithProvider): V4Pact {
         val requestBody: DslPart = PactDslJsonBody()
             .stringType("name")

@@ -1,18 +1,23 @@
 const { Kafka } = require("kafkajs")
+const { createMovie } = require("./movie.event")
 
 const clientId = "movie-event"
-const brokers = ["localhost:9092"]
-const kafka_topic = "movies"
+const brokers = ["localhost:29092"]
+const topic = "movies"
 
 const kafka = new Kafka({ clientId, brokers })
 const producer = kafka.producer()
 
 const produce = async (name, year) => {
 	await producer.connect()
+    const message = createMovie(name, year)
     await producer.send({
-        kafka_topic,
+        topic,
         messages: [
-            createMovie(name, year),
+            {
+                key: "1",
+                value: JSON.stringify(message)
+            }
         ],
     })
 }

@@ -3,17 +3,15 @@ const {
   MessageConsumerPact,
   asynchronousBodyHandler,
 } = require("@pact-foundation/pact");
-const movieEventHandler = require('./movie.handler')
-const { like, regex } = MatchersV3;
-
+const movieEventHandler = require('./movie.handler');
+const { like } = MatchersV3;
 const path = require("path");
 
 describe("Kafka handler", () => {
   const messagePact = new MessageConsumerPact({
     consumer: "ConsumerEvent",
-    dir: path.resolve(process.cwd(), "pacts"),
-    pactfileWriteMode: "update",
     provider: "EventProducer",
+    dir: path.resolve(process.cwd(), "pacts"),
     logLevel: "info",
   });
 

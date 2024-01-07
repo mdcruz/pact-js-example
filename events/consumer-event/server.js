@@ -7,7 +7,7 @@ const port = 8080;
 const init = () => {
     app.use(cors());
 
-    consumeMovieStream(streamHandler)
+    consumeMovieStream(streamHandler);
 
     return app.listen(port, () => console.log(`Provider API listening on port ${port}...`));
 };

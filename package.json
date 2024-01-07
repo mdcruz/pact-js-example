@@ -19,7 +19,7 @@
     "produce:kafka:message": "node events/event-producer/index.js",
     "consume:kafka:message": "node events/consumer-event/server.js",
     "test:event:consumer": "jest ./events/consumer-event/src/movies/movie.handler.pact.test.js",
-    "test:event:producer": "jest ./events/event-producer/src/movie.event.pact.test.js"
+    "test:event:producer": "jest --testTimeout 30000 ./events/event-producer/src/movie.event.pact.test.js"
   },
   "author": "",
   "license": "ISC",

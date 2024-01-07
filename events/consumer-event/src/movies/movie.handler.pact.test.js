@@ -25,7 +25,7 @@ describe("Kafka handler", () => {
         })
         .withMetadata({
           "contentType": "application/json",
-          "kafka_topic": "movies",
+          "topic": "movies",
         })
         .verify(asynchronousBodyHandler(movieEventHandler));
     });

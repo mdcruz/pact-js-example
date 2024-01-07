@@ -1,8 +1,8 @@
 const repository = require("./movie.repository");
 const Movie = require('./movie');
 
-const handler = (movie) => {
-  return Promise.resolve(repository.insert(new Movie(movie.name, movie.year)))
+const handler = (message) => {
+  return Promise.resolve(repository.insert(new Movie(message.name, message.year)));
 }
 
-module.exports = handler
+module.exports = handler;

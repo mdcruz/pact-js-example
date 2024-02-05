@@ -1,0 +1,24 @@
+name: Run contract tests
+
+on: push
+
+env:
+  PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+  PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+
+jobs:
+  contract-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm i
+      - name: Run web consumer contract tests
+        run: npm run test:web:consumer
+      - name: Publish contract to Pactflow
+        run: npm run publish:pact
+      - name: Run provider contract tests
+        run: npm run test:provider

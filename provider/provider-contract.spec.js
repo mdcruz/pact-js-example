@@ -13,7 +13,7 @@ const options = {
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   providerVersion: process.env.GITHUB_SHA,
   publishVerificationResult: true,
-  consumerVersionTags: ['main'],
+  providerVersionBranch: process.env.GITHUB_BRANCH,
   stateHandlers: {
     'Has a movie with specific ID': (parameters) => {
       movies.getFirstMovie().id = parameters.id;

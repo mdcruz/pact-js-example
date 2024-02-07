@@ -15,7 +15,7 @@ describe('Event producer tests', () => {
     logLevel: 'info',
     provider: 'EventProducer',
     providerVersion: process.env.GITHUB_SHA,
-    providerVersionBranch: 'main',
+    providerVersionBranch: process.env.GITHUB_BRANCH,
     pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
     pactBrokerToken: process.env.PACT_BROKER_TOKEN,
     pactUrls: [process.env.PACT_BROKER_BASE_URL]

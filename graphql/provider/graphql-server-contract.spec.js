@@ -7,7 +7,7 @@ const options = {
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   providerVersion: process.env.GITHUB_SHA,
   publishVerificationResult: true,
-  consumerVersionTags: ['main'],
+  providerVersionBranch: process.env.GITHUB_BRANCH,
 };
 
 const verifier = new Verifier(options);

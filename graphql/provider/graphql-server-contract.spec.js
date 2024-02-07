@@ -8,6 +8,7 @@ const options = {
   providerVersion: process.env.GITHUB_SHA,
   publishVerificationResult: true,
   providerVersionBranch: process.env.GITHUB_BRANCH,
+  consumerVersionSelectors: [{ mainBranch: true }, { deployed: true }],
 };
 
 const verifier = new Verifier(options);

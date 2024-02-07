@@ -14,6 +14,7 @@ const options = {
   providerVersion: process.env.GITHUB_SHA,
   publishVerificationResult: true,
   providerVersionBranch: process.env.GITHUB_BRANCH,
+  consumerVersionSelectors: [{ mainBranch: true }, { deployed: true }],
   stateHandlers: {
     'Has a movie with specific ID': (parameters) => {
       movies.getFirstMovie().id = parameters.id;

@@ -57,7 +57,7 @@ class MoviesApiPactTest {
     fun addMoviePact(builder: PactDslWithProvider): V4Pact {
         val requestBody: DslPart = PactDslJsonBody()
             .stringType("name")
-            .integerType("year")
+            .integerType("year", 2004)
         val responseBody: DslPart = PactDslJsonBody()
             .integerType("id", 100)
             .stringType("name", "Shaun of the Dead")

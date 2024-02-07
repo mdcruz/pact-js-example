@@ -37,8 +37,9 @@ server.post('/movies', (req, res) => {
   });
 
   const result = schema.validate(req.body);
+  const id = movies.length < 1 ? (movies[movies.length - 1].id) + 1 : 1;
   const movie = {
-    id: movies[movies.length - 1].id + 1,
+    id: id,
     name: req.body.name,
     year: req.body.year,
   };
@@ -49,7 +50,7 @@ server.post('/movies', (req, res) => {
     res.send(`Movie ${req.body.name} already exists`);
   } else {
     movies.insertMovie(movie);
-    res.send(movie);
+    res.json(movie);
   }
 });
 

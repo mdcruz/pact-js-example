@@ -18,7 +18,8 @@ describe('Event producer tests', () => {
     providerVersionBranch: 'main',
     pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
     pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-    pactUrls: [process.env.PACT_BROKER_BASE_URL]
+    pactUrls: [process.env.PACT_BROKER_BASE_URL],
+    publishVerificationResult: true,
   });
 
   describe('send a movie add event', () => {

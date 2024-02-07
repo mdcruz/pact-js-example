@@ -5,6 +5,7 @@ on: push
 env:
   PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+  GITHUB_SHA: ${{ github.sha }}
 
 jobs:
   contract-test:

@@ -11,7 +11,7 @@ const options = {
   providerBaseUrl: `http://localhost:${port}`,
   pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-  providerVersion: '1.0.0',
+  providerVersion: process.env.GITHUB_SHA,
   publishVerificationResult: true,
   consumerVersionTags: ['main'],
   stateHandlers: {

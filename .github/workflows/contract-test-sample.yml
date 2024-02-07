@@ -19,7 +19,11 @@ jobs:
         run: npm i
       - name: Run web consumer contract tests
         run: npm run test:web:consumer
+      - name: Run graphql consumer contract tests
+        run: npm run test:graphql:consumer
       - name: Publish contract to Pactflow
         run: npm run publish:pact
       - name: Run provider contract tests
         run: npm run test:provider
+      - name: Run graphql provider contract tests
+        run: test:graphql:provider

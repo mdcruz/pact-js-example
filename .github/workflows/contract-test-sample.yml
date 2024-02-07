@@ -26,4 +26,4 @@ jobs:
       - name: Run provider contract tests
         run: npm run test:provider
       - name: Run graphql provider contract tests
-        run: test:graphql:provider
+        run: npm run test:graphql:provider

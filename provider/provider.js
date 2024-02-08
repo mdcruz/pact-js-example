@@ -37,8 +37,10 @@ server.post('/movies', (req, res) => {
   });
 
   const result = schema.validate(req.body);
+  const id = movies.length < 1 ? (movies[movies.length - 1].id) + 1 : 1;
+
   const movie = {
-    id: movies[movies.length - 1].id + 1,
+    id,
     name: req.body.name,
     year: req.body.year,
   };

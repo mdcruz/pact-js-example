@@ -51,7 +51,7 @@ server.post('/movies', (req, res) => {
     res.send(`Movie ${req.body.name} already exists`);
   } else {
     movies.insertMovie(movie);
-    res.send(movie);
+    res.json(movie);
   }
 });
 

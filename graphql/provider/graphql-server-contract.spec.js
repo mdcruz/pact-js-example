@@ -5,13 +5,9 @@ const options = {
   providerBaseUrl: `http://localhost:4000/graphql`,
   pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-  providerVersion: process.env.GITHUB_SHA,
+  providerVersion: '1.0.0',
   publishVerificationResult: true,
-  providerVersionBranch: process.env.GITHUB_BRANCH,
-  consumerVersionSelectors: [
-    { mainBranch: true },
-    { matchingBranch: true },
-  ],
+  consumerVersionTags: ['main'],
 };
 
 const verifier = new Verifier(options);

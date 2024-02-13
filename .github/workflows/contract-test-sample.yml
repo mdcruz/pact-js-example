@@ -40,3 +40,9 @@ jobs:
       - name: Record provider deployment
         run: npm run record:provider:deployment
         if: ${{ github.ref_name == 'main' }}
+      - name: Record GraphQL consumer deployment
+        run: npm run record:graphql:consumer:deployment
+        if: ${{ github.ref_name == 'main' }}
+      - name: Record GraphQL provider deployment
+        run: npm run record:graphql:provider:deployment
+        if: ${{ github.ref_name == 'main' }}

@@ -31,8 +31,14 @@ jobs:
       - name: Can I deploy web consumer?
         run: npm run can:i:deploy:consumer
         if: ${{ github.ref_name == 'main' }}
+      - name: Can I deploy GraphQL consumer?
+        run: npm run can:i:deploy:graphql:consumer
+        if: ${{ github.ref_name == 'main' }}
       - name: Can I deploy provider?
         run: npm run can:i:deploy:provider
+        if: ${{ github.ref_name == 'main' }}
+      - name: Can I deploy GraphQL provider?
+        run: npm run can:i:deploy:graphql:provider
         if: ${{ github.ref_name == 'main' }}
       - name: Record web consumer deployment
         run: npm run record:web:consumer:deployment

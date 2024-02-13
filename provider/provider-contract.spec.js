@@ -11,13 +11,9 @@ const options = {
   providerBaseUrl: `http://localhost:${port}`,
   pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-  providerVersion: process.env.GITHUB_SHA,
+  providerVersion: '1.0.0',
   publishVerificationResult: true,
-  providerVersionBranch: process.env.GITHUB_BRANCH,
-  consumerVersionSelectors: [
-    { mainBranch: true },
-    { matchingBranch: true },
-  ],
+  consumerVersionTags: ['main'],
   stateHandlers: {
     'Has a movie with specific ID': (parameters) => {
       movies.getFirstMovie().id = parameters.id;

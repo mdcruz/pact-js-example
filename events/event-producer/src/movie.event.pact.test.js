@@ -19,7 +19,7 @@ describe('Event producer tests', () => {
     consumerVersionSelectors: [
       { mainBranch: true },
       { matchingBranch: true },
-      { deployedOrRelease: true }
+      { deployedOrReleased: true }
     ],
     pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
     pactBrokerToken: process.env.PACT_BROKER_TOKEN,

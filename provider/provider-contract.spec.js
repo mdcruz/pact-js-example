@@ -17,7 +17,7 @@ const options = {
   consumerVersionSelectors: [
     { mainBranch: true },
     { matchingBranch: true },
-    { deployedOrRelease: true }
+    { deployedOrReleased: true }
   ],
   stateHandlers: {
     'Has a movie with specific ID': (parameters) => {

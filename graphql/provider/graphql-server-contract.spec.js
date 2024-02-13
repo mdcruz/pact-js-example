@@ -11,7 +11,7 @@ const options = {
   consumerVersionSelectors: [
     { mainBranch: true },
     { matchingBranch: true },
-    { deployedOrRelease: true }
+    { deployedOrReleased: true }
   ],
 };
 

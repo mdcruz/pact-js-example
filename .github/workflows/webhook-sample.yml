@@ -2,7 +2,6 @@ name: Contract requiring verification published
 
 on: 
   repository_dispatch:
-  workflow_dispatch:
 
 env:
   PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}

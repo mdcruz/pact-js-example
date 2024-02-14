@@ -21,7 +21,7 @@ const options = {
   }
 }
 
-if (process.env.PACT_URL) {
+if (process.env.PACT_PAYLOAD_URL) {
   console.log(`Pact payload URL specified: ${process.env.PACT_PAYLOAD_URL}`)
   options.pactUrls = [process.env.PACT_PAYLOAD_URL]
 } else {

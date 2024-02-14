@@ -1,7 +1,9 @@
-name: Contract requiring verification published
+name: contract_requiring_verification_published
 
 on: 
   repository_dispatch:
+    types:
+      - contract_requiring_verification_published
 
 env:
   PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}

@@ -9,9 +9,8 @@ env:
   PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
   PACT_PAYLOAD_URL: ${{ github.event.client_payload.pact_url }}
-  PAYLOAD_SHA: ${{ github.event.client_payload.sha }}
-  GITHUB_SHA: ${{ github.sha }}
-  GITHUB_BRANCH: ${{ github.ref_name }}
+  GITHUB_SHA: ${{ github.event.client_payload.sha }}
+  GITHUB_BRANCH: ${{ github.event.client_payload.branch }}
 
 jobs:
   contract-verification-via-webhook:
@@ -21,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
         if: ${{env.PACT_PAYLOAD_URL}}
         with:
-          ref: ${{env.PAYLOAD_SHA}}
+          ref: ${{env.GITHUB_SHA}}
       - uses: actions/setup-node@v4
         with:
           node-version: 18

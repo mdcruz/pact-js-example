@@ -6,7 +6,6 @@ on:
       - contract_requiring_verification_published
 
 env:
-  PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
   PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
   PACT_PAYLOAD_URL: ${{ github.event.client_payload.pact_url }}
   GITHUB_SHA: ${{ github.event.client_payload.sha }}

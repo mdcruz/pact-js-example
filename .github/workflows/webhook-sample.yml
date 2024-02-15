@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout specific SHA if webhook providers pact URL
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: ${{env.PACT_PAYLOAD_URL}}
         with:
           ref: ${{env.GITHUB_SHA}}

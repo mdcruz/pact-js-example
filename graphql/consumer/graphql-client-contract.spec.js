@@ -1,7 +1,12 @@
 const path = require('path');
-const { getMovies } = require('./graphql-client.js')
+const { getMovies, getMovieById } = require('./graphql-client.js')
 const { Pact, GraphQLInteraction, Matchers } = require('@pact-foundation/pact');
-const { eachLike } = Matchers;
+
+const {
+  eachLike,
+  integer,
+  string,
+} = Matchers;
 
 const provider = new Pact({
   port: 4000,
@@ -60,6 +65,51 @@ describe('GraphQL example', () => {
     test('returns the correct response', async () => {
       const response = await getMovies();
       expect(response.movies[0]).toEqual(EXPECTED_BODY);
+    });
+  });
+
+  describe('When a query to list a single movie on /graphql is made', () => {
+    beforeAll(() => {
+      const graphqlQuery = new GraphQLInteraction()
+        .uponReceiving('a single movie request')
+        .withQuery(
+          `
+          query MovieQuery($movieId: Int!) {
+            movie(movieId: $movieId) {
+              id
+              name
+              year
+            }
+          }
+        `
+        )
+        .withOperation('MovieQuery')
+        .withVariables({ movieId: 1 })
+        .withRequest({
+          method: 'POST',
+          path: '/graphql',
+        })
+        .willRespondWith({
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+          body: {
+            data: {
+              movie: {
+                id: integer(EXPECTED_BODY.id),
+                name: string(EXPECTED_BODY.name),
+                year: integer(EXPECTED_BODY.year)
+              },
+            },
+          },
+        });
+      return provider.addInteraction(graphqlQuery);
+    })
+
+    test('returns the correct response', async () => {
+      const response = await getMovieById(1);
+      expect(response.movie).toEqual(EXPECTED_BODY);
     });
   });
 });

@@ -46,6 +46,55 @@
         },
         "status": 200
       }
+    },
+    {
+      "description": "a single movie request",
+      "request": {
+        "body": {
+          "operationName": "MovieQuery",
+          "query": "\n          query MovieQuery($movieId: Int!) {\n            movie(movieId: $movieId) {\n              id\n              name\n              year\n            }\n          }\n        ",
+          "variables": {
+            "movieId": 1
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.query": {
+            "match": "regex",
+            "regex": "\\s*query\\s*MovieQuery\\(\\$movieId:\\s*Int!\\)\\s*\\{\\s*movie\\(movieId:\\s*\\$movieId\\)\\s*\\{\\s*id\\s*name\\s*year\\s*\\}\\s*\\}\\s*"
+          }
+        },
+        "method": "POST",
+        "path": "/graphql"
+      },
+      "response": {
+        "body": {
+          "data": {
+            "movie": {
+              "id": 1,
+              "name": "My GraphQL movie",
+              "year": 1999
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body.data.movie.id": {
+            "match": "type"
+          },
+          "$.body.data.movie.name": {
+            "match": "type"
+          },
+          "$.body.data.movie.year": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
     }
   ],
   "metadata": {

@@ -9,7 +9,6 @@ importData();
 const options = {
   provider: 'MoviesAPI',
   providerBaseUrl: `http://localhost:${port}`,
-  pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   providerVersion: '1.0.0',
   publishVerificationResult: true,
@@ -24,12 +23,15 @@ const options = {
       return Promise.resolve({ description: `Movie with ID ${parameters.id} added!` });
     },
   }
-};
+}
 
 const verifier = new Verifier(options);
 
 describe('Pact Verification', () => {
   test('should validate the expectations of movie-consumer', () => {
+    if (process.env.PACT_URL) {
+
+    }
     return verifier
       .verifyProvider()
       .then(output => {

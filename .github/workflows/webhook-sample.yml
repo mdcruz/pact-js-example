@@ -1,0 +1,29 @@
+name: contract_requiring_verification_published
+
+on: 
+  repository_dispatch:
+    types:
+      - contract_requiring_verification_published
+
+env:
+  PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+  PACT_PAYLOAD_URL: ${{ github.event.client_payload.pact_url }}
+  GITHUB_SHA: ${{ github.event.client_payload.sha }}
+  GITHUB_BRANCH: ${{ github.event.client_payload.branch }}
+
+jobs:
+  contract-verification-via-webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout specific SHA if webhook providers pact URL
+        uses: actions/checkout@v4
+        if: ${{env.PACT_PAYLOAD_URL}}
+        with:
+          ref: ${{env.GITHUB_SHA}}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm i
+      - name: Run provider contract tests
+        run: npm run test:provider

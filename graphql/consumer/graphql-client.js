@@ -29,18 +29,21 @@ const getMovies = async () => {
   return response;
 };
 
-const getMovieById = async () => {
+const getMovieById = async (movieId) => {
   const response = await client
     .query({
       query: gql`
-        query Movie($movieId: Int!) {
+        query MovieQuery($movieId: Int!) {
           movie(movieId: $movieId) {
             id
             name
             year
-          }
+          },
         }
       `,
+      variables: {
+        movieId,
+      },
     })
     .then((result) => result.data)
     .catch((err) => err.response);

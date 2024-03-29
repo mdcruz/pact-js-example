@@ -116,7 +116,7 @@ server.post('/movies', (req, res) => {
     res.status(409).send({ error: `Movie ${req.body.name} already exists` });
   } else {
     movies.insertMovie(movie);
-    res.status(201).json(movie);
+    res.json(movie);
   }
 });
 

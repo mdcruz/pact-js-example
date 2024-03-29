@@ -85,7 +85,7 @@ describe('Movies Service', () => {
           path: '/movies',
         })
         .willRespondWith({
-          status: 201,
+          status: 200,
           body: {
             id: integer(EXPECTED_BODY.id),
             name,

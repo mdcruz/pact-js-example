@@ -37,7 +37,7 @@
             }
           }
         },
-        "status": 201
+        "status": 200
       }
     },
     {
@@ -99,6 +99,60 @@
           }
         },
         "status": 404
+      }
+    },
+    {
+      "description": "a request to a specific movie",
+      "providerStates": [
+        {
+          "name": "Has a movie with specific ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/movie/100"
+      },
+      "response": {
+        "body": {
+          "id": 100,
+          "name": "My movie",
+          "year": 1999
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.year": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
       }
     },
     {
@@ -207,6 +261,42 @@
       "providerStates": [
         {
           "name": "Has a movie with specific ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "path": "/movie/100"
+      },
+      "response": {
+        "body": {
+          "message": "Movie 100 has been deleted"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.message": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to delete a movie that exists",
+      "providerStates": [
+        {
+          "name": "there is a movie with specific ID",
           "params": {
             "id": 100
           }

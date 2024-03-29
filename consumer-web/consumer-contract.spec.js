@@ -1,5 +1,5 @@
 const path = require('path');
-const { fetchMovies, fetchSingleMovie } = require('./consumer');
+const { addNewMovie, deleteMovie, fetchMovies, fetchSingleMovie } = require('./consumer');
 const { PactV3, MatchersV3 } = require('@pact-foundation/pact');
 
 const {
@@ -54,13 +54,128 @@ describe('Movies Service', () => {
           body: {
             id: integer(testId),
             name: string(EXPECTED_BODY.name),
-            year: integer(EXPECTED_BODY.year)
+            year: integer(EXPECTED_BODY.year),
           }
         });
 
       await provider.executeTest(async mockProvider => {
         const movies = await fetchSingleMovie(mockProvider.url, testId);
         expect(movies).toEqual(EXPECTED_BODY);
+      });
+    });
+  });
+
+  describe('When a POST request is made to /movies', () => {
+    test('it should add a new movie', async () => {
+
+      const name = 'Harry Potter and the Philosopher Stone';
+      const year = 2001;
+
+      EXPECTED_BODY.name = name;
+      EXPECTED_BODY.year = year;
+
+      provider
+        .uponReceiving('a request to add a new movie')
+        .withRequest({
+          method: 'POST',
+          body: {
+            name,
+            year,
+          },
+          path: '/movies',
+        })
+        .willRespondWith({
+          status: 201,
+          body: {
+            id: integer(EXPECTED_BODY.id),
+            name,
+            year,
+          }
+        });
+
+      await provider.executeTest(async mockProvider => {
+        const movies = await addNewMovie(mockProvider.url, name, year);
+        expect(movies).toEqual(EXPECTED_BODY);
+      });
+    });
+
+    test('it should not add a movie that exists already', async () => {
+
+      const name = 'Harry Potter and the Philosopher Stone';
+      const year = 2001;
+
+      EXPECTED_BODY.name = name;
+      EXPECTED_BODY.year = year;
+
+      provider
+        .given('an existing movie exists', { EXPECTED_BODY })
+        .uponReceiving('a request to add an existing movie')
+        .withRequest({
+          method: 'POST',
+          body: {
+            name,
+            year,
+          },
+          path: '/movies',
+        })
+        .willRespondWith({
+          status: 409,
+          body: {
+            error: string(`Movie ${name} already exists`)
+          }
+        });
+
+      await provider.executeTest(async mockProvider => {
+        const movies = await addNewMovie(mockProvider.url, name, year);
+        expect(movies.error).toEqual(`Movie ${name} already exists`);
+      });
+    });
+  });
+
+  describe('When a DELETE request is made to /movies', () => {
+    test('it should throw an error if movie to delete does not exist', async () => {
+      const testId = 643256;
+
+      provider
+        .uponReceiving('a request to delete a movie that does not exists')
+        .withRequest({
+          method: 'DELETE',
+          path: `/movie/${testId}`,
+        })
+        .willRespondWith({
+          status: 404,
+          body: {
+            error: string(`Movie ${testId} not found`)
+          }
+        });
+
+      await provider.executeTest(async mockProvider => {
+        const movies = await deleteMovie(mockProvider.url, testId);
+        expect(movies.error).toEqual(`Movie ${testId} not found`);
+      });
+    });
+
+    test('it should delete an existing movie successfully', async () => {
+      const testId = 100;
+      EXPECTED_BODY.id = testId;
+
+      provider
+        .given('there is a movie with specific ID', { id: testId })
+        .uponReceiving('a request to delete a movie that exists')
+        .withRequest({
+          method: 'DELETE',
+          path: `/movie/${testId}`,
+        })
+        .willRespondWith({
+          status: 200,
+          body: {
+            message: string(`Movie ${testId} has been deleted`)
+          }
+        });
+
+      await provider.executeTest(async mockProvider => {
+        const movies = await deleteMovie(mockProvider.url, testId);
+        expect(movies.message).toEqual(`Movie ${testId} has been deleted`);
       });
     });
   });

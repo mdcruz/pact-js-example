@@ -28,27 +28,19 @@ jobs:
         run: npm run test:provider
       - name: Run graphql provider contract tests
         run: npm run test:graphql:provider
-      - name: Can I deploy web consumer?
-        run: npm run can:i:deploy:consumer
-        if: ${{ github.ref_name == 'main' }}
-      - name: Can I deploy GraphQL consumer?
-        run: npm run can:i:deploy:graphql:consumer
-        if: ${{ github.ref_name == 'main' }}
       - name: Can I deploy provider?
         run: npm run can:i:deploy:provider
-        if: ${{ github.ref_name == 'main' }}
       - name: Can I deploy GraphQL provider?
         run: npm run can:i:deploy:graphql:provider
-        if: ${{ github.ref_name == 'main' }}
-      - name: Record web consumer deployment
-        run: npm run record:web:consumer:deployment
-        if: ${{ github.ref_name == 'main' }}
       - name: Record provider deployment
         run: npm run record:provider:deployment
-        if: ${{ github.ref_name == 'main' }}
       - name: Record GraphQL consumer deployment
         run: npm run record:graphql:consumer:deployment
-        if: ${{ github.ref_name == 'main' }}
       - name: Record GraphQL provider deployment
         run: npm run record:graphql:provider:deployment
-        if: ${{ github.ref_name == 'main' }}
+      - name: Can I deploy web consumer?
+        run: npm run can:i:deploy:consumer
+      - name: Can I deploy GraphQL consumer?
+        run: npm run can:i:deploy:graphql:consumer
+      - name: Record web consumer deployment
+        run: npm run record:web:consumer:deployment

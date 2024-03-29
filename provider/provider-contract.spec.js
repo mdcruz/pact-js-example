@@ -17,7 +17,11 @@ const options = {
     'Has a movie with specific ID': (parameters) => {
       movies.getFirstMovie().id = parameters.id;
       return Promise.resolve({ description: `Movie with ID ${parameters.id} added!` });
-    }
+    },
+    'an existing movie exists': (parameters) => {
+      movies.insertMovie(parameters);
+      return Promise.resolve({ description: `Movie with ID ${parameters.id} added!` });
+    },
   }
 }
 

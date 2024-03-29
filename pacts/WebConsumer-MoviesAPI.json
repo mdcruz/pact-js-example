@@ -4,6 +4,43 @@
   },
   "interactions": [
     {
+      "description": "a request to add a new movie",
+      "request": {
+        "body": {
+          "name": "Harry Potter and the Philosopher Stone",
+          "year": 2001
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "method": "POST",
+        "path": "/movies"
+      },
+      "response": {
+        "body": {
+          "id": 100,
+          "name": "Harry Potter and the Philosopher Stone",
+          "year": 2001
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
       "description": "a request to all movies",
       "request": {
         "method": "GET",
@@ -34,6 +71,34 @@
           }
         },
         "status": 200
+      }
+    },
+    {
+      "description": "a request to delete a movie that does not exists",
+      "request": {
+        "method": "DELETE",
+        "path": "/movie/643256"
+      },
+      "response": {
+        "body": {
+          "error": "Movie 643256 not found"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.error": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 404
       }
     },
     {
@@ -82,6 +147,179 @@
               "matchers": [
                 {
                   "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to add an existing movie",
+      "providerStates": [
+        {
+          "name": "an existing movie exists",
+          "params": {
+            "EXPECTED_BODY": {
+              "id": 100,
+              "name": "Harry Potter and the Philosopher Stone",
+              "year": 2001
+            }
+          }
+        }
+      ],
+      "request": {
+        "body": {
+          "name": "Harry Potter and the Philosopher Stone",
+          "year": 2001
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "method": "POST",
+        "path": "/movies"
+      },
+      "response": {
+        "body": {
+          "error": "Movie Harry Potter and the Philosopher Stone already exists"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.error": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 409
+      }
+    },
+    {
+      "description": "a request to a specific movie",
+      "providerStates": [
+        {
+          "name": "Has a movie with specific ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/movie/100"
+      },
+      "response": {
+        "body": {
+          "id": 100,
+          "name": "My movie",
+          "year": 1999
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.year": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to delete a movie that exists",
+      "providerStates": [
+        {
+          "name": "Has a movie with specific ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "path": "/movie/100"
+      },
+      "response": {
+        "body": {
+          "message": "Movie 100 has been deleted"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.message": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to delete a movie that exists",
+      "providerStates": [
+        {
+          "name": "there is a movie with specific ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "path": "/movie/100"
+      },
+      "response": {
+        "body": {
+          "message": "Movie 100 has been deleted"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.message": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
                 }
               ]
             }

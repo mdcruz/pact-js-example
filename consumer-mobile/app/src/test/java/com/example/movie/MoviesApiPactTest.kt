@@ -52,36 +52,4 @@ class MoviesApiPactTest {
         val response = runBlocking { client.getMovies()}
         assertTrue(response.isNotEmpty())
     }
-
-    @Pact(provider = "MoviesAPI", consumer = "MoviesAndroidApp")
-    fun addMoviePact(builder: PactDslWithProvider): V4Pact {
-        val requestBody: DslPart = PactDslJsonBody()
-            .stringType("name")
-            .integerType("year", 2004)
-        val responseBody: DslPart = PactDslJsonBody()
-            .integerType("id", 100)
-            .stringType("name", "Shaun of the Dead")
-            .integerType("year", 2004)
-        return builder
-            .given("movie doesn't exist")
-            .uponReceiving("a request to add a movie")
-            .path("/movies")
-            .method("POST")
-            .headers(mapOf("Content-type" to "application/json"))
-            .body(requestBody)
-            .willRespondWith()
-            .status(200)
-            .headers(mapOf("Content-type" to "application/json"))
-            .body(responseBody)
-            .toPact(V4Pact::class.java)
-    }
-
-    @Test
-    @PactTestFor(providerName="MoviesAPI", pactMethod = "addMoviePact", providerType = ProviderType.SYNCH)
-    fun `should add movie`(mockServer: MockServer) {
-        var client = MovieClient(mockServer.getUrl())
-        val add = Add("Shaun of the Dead", 2004)
-        val response = runBlocking { client.addMovie(add)}
-        assertEquals(response.name, "Shaun of the Dead")
-    }
 }

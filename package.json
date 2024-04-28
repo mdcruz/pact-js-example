@@ -24,7 +24,17 @@
     "produce:kafka:message": "node events/event-producer/index.js",
     "consume:kafka:message": "node events/consumer-event/server.js",
     "test:event:consumer": "jest ./events/consumer-event/src/movies/movie.handler.pact.test.js",
-    "test:event:producer": "jest --testTimeout 30000 ./events/event-producer/src/movie.event.pact.test.js"
+    "test:event:producer": "jest --testTimeout 30000 ./events/event-producer/src/movie.event.pact.test.js",
+    "start:bi:web": "node consumer-bi-directional/index.js",
+    "bi:consumer:cy:open": "cypress open",
+    "bi:consumer:cy:run": "cypress run",
+    "bi:provider:dredd": "dredd",
+    "bi:swagger": "curl -X GET 'http://localhost:3001/swagger.json' > ./output/movies-api.json",
+    "prebi:provider:publish:dredd:contract": "npm run bi:swagger",
+    "bi:provider:publish:dredd:contract": "pactflow publish-provider-contract ./output/movies-api.json --provider BiDreddMoviesAPI  --provider-app-version $(npx -y absolute-version) --branch $(git rev-parse --abbrev-ref HEAD) --content-type application/json --verification-exit-code=0  --verification-results ./output/dredd-report.md --verification-results-content-type text/plain --verifier dredd",
+    "bi:provider:newman": "newman run ./provider/postman-tests/chapter-11.postman_collection.json -r cli,json --reporter-json-export ./output/newman-report.json",
+    "prebi:provider:publish:postman:contract": "npm run bi:swagger",
+    "bi:provider:publish:postman:contract": "pactflow publish-provider-contract ./output/movies-api.json --provider BiPostmanMoviesAPI  --provider-app-version $(npx -y absolute-version) --branch $(git rev-parse --abbrev-ref HEAD) --content-type application/json --verification-exit-code=0  --verification-results ./output/newman-report.json --verification-results-content-type json --verifier postman"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +43,7 @@
     "@apollo/datasource-rest": "6.2.2",
     "@apollo/server": "4.9.5",
     "axios": "1.5.1",
+    "cors": "2.8.5",
     "express": "4.18.2",
     "graphql": "16.8.1",
     "graphql-tag": "2.12.6",
@@ -45,8 +56,12 @@
   },
   "devDependencies": {
     "@pact-foundation/pact": "12.1.0",
+    "@pactflow/pact-cypress-adapter": "1.3.0",
     "cross-env": "7.0.3",
+    "cypress": "13.7.3",
+    "dredd": "14.1.0",
     "jest": "29.7.0",
+    "newman": "6.1.2",
     "supertest": "6.3.4"
   }
 }

@@ -1,10 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const Movies = require('./movies');
 const Joi = require('joi');
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
+var corsOptions = {
+  origin: 'http://localhost:8000',
+  optionsSuccessStatus: 200
+}
+
 const server = express();
+server.use(cors(corsOptions));
 server.use(express.json());
 
 const movies = new Movies();
@@ -28,7 +35,7 @@ const importData = () => {
  *      '200':
  *        description: A list of movie objects
  *        content:
- *          application/json:
+ *          application/json; charset=utf-8:
  *            schema:
  *              type: array
  *              items:
@@ -59,12 +66,14 @@ server.get('/movies', (req, res) => {
  *        name: id
  *        schema:
  *          type: integer
+ *          example: 1
  *        required: true
+ *        example: 1
  *    responses:
  *      '200':
  *        description: A movie object
  *        content:
- *          application/json:
+ *          application/json; charset=utf-8:
  *            schema:
  *              type: object
  *              properties:
@@ -78,13 +87,6 @@ server.get('/movies', (req, res) => {
  *                id: 1
  *                name: James Bond
  *                year: 2021
- *      '404':
- *        description: No movie exists
- *        content:
- *          text/plain:
- *            schema:
- *              type: string
- *              example: Movie not found
  */
 server.get('/movie/:id', (req, res) => {
   const movie = movies.getMovieById(req.params.id);
@@ -135,7 +137,8 @@ const options = {
   definition: {
     openapi: "3.1.0",
     info: {
-      title: "Provider Movies API"
+      title: "Provider Movies API",
+      version: "0.0.1"
     },
     externalDocs: {
       description: "swagger.json",

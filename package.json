@@ -28,6 +28,8 @@
     "start:bi:web": "node consumer-bi-directional/index.js",
     "bi:consumer:cy:open": "cypress open",
     "bi:consumer:cy:run": "cypress run",
+    "bi:consumer:cy:publish": "pact-broker publish ./cypress/pacts --consumer-app-version=0.0.1 --branch=bi-directional-chapter --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN",
+    "bi:can:i:deploy:consumer": "pact-broker can-i-deploy --pacticipant BiWebConsumer --version=0.0.1 --to-environment production",
     "bi:provider:dredd": "dredd",
     "bi:swagger": "curl -X GET 'http://localhost:3001/swagger.json' > ./output/movies-api.json",
     "prebi:provider:publish:dredd:contract": "npm run bi:swagger",

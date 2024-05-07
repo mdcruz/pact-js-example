@@ -1,6 +1,6 @@
 describe('Movies', () => {
     before(() => {
-        cy.setupPact('BiWebConsumer', 'MoviesAPI');
+        cy.setupPact('BiWebConsumer', 'BiPostmanMoviesAPI');
         cy.intercept('http://localhost:3001/movie/1', {
             statusCode: 200,
             body: { id: 1, name: "finding nemo", year: 2003 }

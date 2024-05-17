@@ -34,12 +34,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "18"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -67,9 +67,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:1.5.4")
     implementation("androidx.compose.ui:ui-tooling-preview:1.5.4")
     implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.room:room-compiler:2.6.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
     testImplementation("au.com.dius.pact.consumer:junit5:4.3.15")
+    testImplementation("com.marcinziolo:kotlin-wiremock:2.1.1")
+    testImplementation("com.atlassian.ta:wiremock-pact-generator:2.5.0")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

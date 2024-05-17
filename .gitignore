@@ -1,2 +1,5 @@
 node_modules
 logs
+cypress/pacts
+cypress/downloads
+output

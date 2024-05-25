@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:provider": "cross-env PORT=3001 node provider/provider-service.js"
+    "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
+    "test:web:consumer": "jest consumer-web/consumer-contract.spec.js",
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.0 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN"
   },
   "author": "",
   "license": "ISC",

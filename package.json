@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
+    "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000",
     "test:web:consumer": "jest consumer-web/consumer-contract.spec.js",
-    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.0 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN"
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.1 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +16,7 @@
     "joi": "17.10.2"
   },
   "devDependencies": {
-    "@pact-foundation/pact": "12.1.0",
+    "@pact-foundation/pact": "^12.5.2",
     "axios": "1.5.1",
     "cross-env": "^7.0.3",
     "jest": "29.7.0"

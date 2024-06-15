@@ -7,7 +7,7 @@
     "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
     "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000",
     "test:web:consumer": "jest consumer-web/consumer-contract.spec.js",
-    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.1 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN"
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.2 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN"
   },
   "author": "",
   "license": "ISC",

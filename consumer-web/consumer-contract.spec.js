@@ -1,5 +1,5 @@
 const path = require("path");
-const { fetchMovies, fetchSingleMovie } = require("./consumer");
+const { fetchMovies, fetchSingleMovie, addNewMovie } = require("./consumer");
 const { PactV3, MatchersV3 } = require("@pact-foundation/pact");
 
 const provider = new PactV3({
@@ -8,11 +8,7 @@ const provider = new PactV3({
   provider: "MoviesAPI",
 });
 
-const {
-    eachLike,
-    integer,
-    string,
-  } = MatchersV3;
+const { eachLike, integer, string, like } = MatchersV3;
 
 const EXPECTED_BODY = { id: 1, name: "My movie", year: 1999 };
 
@@ -46,7 +42,7 @@ describe("Movies API", () => {
       EXPECTED_BODY.id = testId;
 
       provider
-        .given('Has a movie with specific ID', { id: testId })
+        .given("Has a movie with specific ID", { id: testId })
         .uponReceiving("a request to a specific movie")
         .withRequest({
           method: "GET",
@@ -64,6 +60,41 @@ describe("Movies API", () => {
       await provider.executeTest(async (mockProvider) => {
         const movies = await fetchSingleMovie(mockProvider.url, testId);
         expect(movies).toEqual(EXPECTED_BODY);
+      });
+    });
+  });
+
+  describe("When the consumer adds a new movie by specifying the movie name and date", () => {
+    test("it should accept the movie and return a status code of 201", async () => {
+      const movieName = "My new movie";
+      const movieYear = 2021;
+
+      provider
+        .uponReceiving("a request to add a new movie")
+        .withRequest({
+          method: "POST",
+          path: "/movies",
+          body: {
+            name: movieName,
+            year: movieYear,
+          },
+        })
+        .willRespondWith({
+          status: 201,
+          body: {
+            id: like(1),
+            name: movieName,
+            year: movieYear,
+          },
+        });
+
+      await provider.executeTest(async (mockProvider) => {
+        const response = await addNewMovie(mockProvider.url, movieName, movieYear);
+        expect(response).toEqual({
+            id: 1,
+            name: movieName,
+            year: movieYear,
+        });
       });
     });
   });

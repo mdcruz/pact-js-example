@@ -39,6 +39,44 @@
       }
     },
     {
+      "description": "a request to add a new movie",
+      "request": {
+        "body": {
+          "name": "My new movie",
+          "year": 2021
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "method": "POST",
+        "path": "/movies"
+      },
+      "response": {
+        "body": {
+          "id": 1,
+          "name": "My new movie",
+          "year": 2021
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "status": {}
+        },
+        "status": 201
+      }
+    },
+    {
       "description": "a request to a specific movie",
       "providerStates": [
         {

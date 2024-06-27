@@ -31,14 +31,18 @@ server.get('/movie/:id', (req, res) => {
 });
 
 server.post('/movies', (req, res) => {
+
   const schema = Joi.object({
     name: Joi.string().required(),
     year: Joi.number().integer().min(1900).max(2023).required(),
   });
 
   const result = schema.validate(req.body);
+
+  const moviesList = movies.getMovies()
+
   const movie = {
-    id: movies[movies.length - 1].id + 1,
+    id: moviesList[moviesList.length - 1].id + 1,
     name: req.body.name,
     year: req.body.year,
   };
@@ -49,7 +53,7 @@ server.post('/movies', (req, res) => {
     res.send(`Movie ${req.body.name} already exists`);
   } else {
     movies.insertMovie(movie);
-    res.send(movie);
+    res.status(201).send(movie);
   }
 });
 

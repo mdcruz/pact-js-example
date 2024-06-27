@@ -1,4 +1,4 @@
-class Movie {
+class Movies {
   constructor() {
     this.movies = [];
   }
@@ -24,4 +24,4 @@ class Movie {
   }
 }
 
-module.exports = Movie;
+module.exports = Movies;

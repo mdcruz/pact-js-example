@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  redpanda:
+    image: vectorized/redpanda:v21.8.1
+    platform: linux/amd64
+    ports:
+      - '29092:29092'
+    command:
+      - redpanda start
+      - --smp 1
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --kafka-addr 0.0.0.0:29092
+      - --advertise-kafka-addr localhost:29092
+
+  init-redpanda:
+    image: vectorized/redpanda:v21.8.1
+    platform: linux/amd64
+    depends_on:
+      - redpanda
+    entrypoint: ['/bin/sh', '-c']
+    command: |
+      "
+      # blocks until redpanda is reachable
+      rpk topic list
+
+      echo -e 'Creating redpanda topics'
+      rpk topic create movies --partitions 1 --replicas 1
+
+      echo -e 'Successfully created the following topics:'
+      rpk topic list
+      "
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    platform: linux/amd64
+    ports:
+      - 8085:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: redpanda:29092
+      DYNAMIC_CONFIG_ENABLED: 'true'

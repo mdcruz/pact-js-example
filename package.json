@@ -4,16 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:provider": "cross-env PORT=3001 node provider/provider-service.js"
+    "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
+    "start:kafka": "docker compose -f ./events/kafka-cluster.yml up -d",
+    "start:redpanda": "docker compose -f ./events/redpanda-cluster.yml up -d",
+    "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000",
+    "test:web:consumer": "jest consumer-web/consumer-contract.spec.js",
+    "test:event:consumer": "jest ./events/consumer-event/src/movies/movie.handler.pact.test.js",
+    "test:event:producer": "jest --testTimeout 30000 ./events/event-producer/src/movie.event.pact.test.js",
+    "produce:kafka:message": "node events/event-producer/index.js",
+    "consume:kafka:message": "node events/consumer-event/server.js",
+    "publish:pact": "node publish-pact.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "4.18.2",
-    "joi": "17.10.2"
+    "joi": "17.10.2",
+    "kafkajs": "^2.2.4",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "@pact-foundation/pact": "12.1.0",
+    "@pact-foundation/pact": "^12.5.2",
     "axios": "1.5.1",
     "cross-env": "^7.0.3",
     "jest": "29.7.0"

@@ -119,7 +119,7 @@ describe('Movies Service', () => {
           path: '/movies',
         })
         .willRespondWith({
-          status: 403,
+          status: 409,
           body: {
             error: string(`Movie ${name} already exists`)
           }

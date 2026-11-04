@@ -16,10 +16,10 @@ describe("GET empty", () => {
     test("/movie/:id not found", async () => {
         await request(server)
             .get("/movie/1")
-            .expect("Content-Type", /text/)
+            .expect("Content-Type", /json/)
             .expect(404)
             .expect((res) => {
-                expect(res.text).toBe("Movie not found")
+                expect(res.body).toStrictEqual({ error: "Movie not found" })
             })
     })
 })
@@ -43,10 +43,10 @@ describe("GET data", () => {
     test("/movie/:id not found", async () => {
         await request(server)
             .get("/movie/100")
-            .expect("Content-Type", /text/)
+            .expect("Content-Type", /json/)
             .expect(404)
             .expect((res) => {
-                expect(res.text).toBe("Movie not found")
+                expect(res.body).toStrictEqual({ error: "Movie not found" })
             })
     })
     

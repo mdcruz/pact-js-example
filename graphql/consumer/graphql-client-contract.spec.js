@@ -1,15 +1,16 @@
 const path = require('path');
 const { getMovies, getMovieById } = require('./graphql-client.js')
-const { Pact, GraphQLInteraction, Matchers } = require('@pact-foundation/pact');
+const { PactV3, MatchersV3 } = require('@pact-foundation/pact');
 
 const {
   eachLike,
   integer,
+  like,
+  regex,
   string,
-} = Matchers;
+} = MatchersV3;
 
-const provider = new Pact({
-  port: 4000,
+const provider = new PactV3({
   dir: path.resolve(process.cwd(), 'pacts'),
   consumer: 'GraphQLConsumer',
   provider: 'GraphQLProvider',
@@ -18,35 +19,27 @@ const provider = new Pact({
 const EXPECTED_BODY = { id: 1, name: "My GraphQL movie", year: 1999 };
 
 describe('GraphQL example', () => {
-  // Setup the provider
-  beforeAll(() => provider.setup());
-
-  // Generate contract when all tests done
-  afterAll(() => provider.finalize());
-
-  // Verify the consumer expectations
-  afterEach(() => provider.verify());
-
   describe('When a query to list all movies on /graphql is made', () => {
-    beforeAll(() => {
-      const graphqlQuery = new GraphQLInteraction()
+    test('returns the correct response', async () => {
+      await provider
         .uponReceiving('a movies request')
-        .withQuery(
-          `
-          query MoviesQuery {
-            movies {
-              id
-              name
-              year
-            }
-          }
-        `
-        )
-        .withOperation('MoviesQuery')
-        .withVariables({})
         .withRequest({
           method: 'POST',
           path: '/graphql',
+          body: like({
+            extensions: {
+              clientLibrary: {
+                name: string('@apollo/client'),
+                version: string('4.3.6'),
+              },
+            },
+            operationName: 'MoviesQuery',
+            query: regex(
+              '\\s*query\\s*MoviesQuery\\s*\\{\\s*movies\\s*\\{\\s*id\\s*name\\s*year(?:\\s+__typename)?\\s*\\}\\s*\\}\\s*',
+              'query MoviesQuery { movies { id name year __typename } }'
+            ),
+            variables: like({}),
+          }),
         })
         .willRespondWith({
           status: 200,
@@ -58,36 +51,35 @@ describe('GraphQL example', () => {
               movies: eachLike(EXPECTED_BODY),
             },
           },
+        })
+        .executeTest(async mockProvider => {
+          const response = await getMovies(`${mockProvider.url}/graphql`);
+          expect(response.movies[0]).toEqual(EXPECTED_BODY);
         });
-      return provider.addInteraction(graphqlQuery);
-    })
-
-    test('returns the correct response', async () => {
-      const response = await getMovies();
-      expect(response.movies[0]).toEqual(EXPECTED_BODY);
     });
   });
 
   describe('When a query to list a single movie on /graphql is made', () => {
-    beforeAll(() => {
-      const graphqlQuery = new GraphQLInteraction()
+    test('returns the correct response', async () => {
+      await provider
         .uponReceiving('a single movie request')
-        .withQuery(
-          `
-          query MovieQuery($movieId: Int!) {
-            movie(movieId: $movieId) {
-              id
-              name
-              year
-            }
-          }
-        `
-        )
-        .withOperation('MovieQuery')
-        .withVariables({ movieId: 1 })
         .withRequest({
           method: 'POST',
           path: '/graphql',
+          body: like({
+            extensions: {
+              clientLibrary: {
+                name: string('@apollo/client'),
+                version: string('4.3.6'),
+              },
+            },
+            operationName: 'MovieQuery',
+            query: regex(
+              '\\s*query\\s*MovieQuery\\(\\$movieId:\\s*Int!\\)\\s*\\{\\s*movie\\(movieId:\\s*\\$movieId\\)\\s*\\{\\s*id\\s*name\\s*year(?:\\s+__typename)?\\s*\\}\\s*\\}\\s*',
+              'query MovieQuery($movieId: Int!) { movie(movieId: $movieId) { id name year __typename } }'
+            ),
+            variables: like({ movieId: 1 }),
+          }),
         })
         .willRespondWith({
           status: 200,
@@ -103,13 +95,11 @@ describe('GraphQL example', () => {
               },
             },
           },
+        })
+        .executeTest(async mockProvider => {
+          const response = await getMovieById(1, `${mockProvider.url}/graphql`);
+          expect(response.movie).toEqual(EXPECTED_BODY);
         });
-      return provider.addInteraction(graphqlQuery);
-    })
-
-    test('returns the correct response', async () => {
-      const response = await getMovieById(1);
-      expect(response.movie).toEqual(EXPECTED_BODY);
     });
   });
 });

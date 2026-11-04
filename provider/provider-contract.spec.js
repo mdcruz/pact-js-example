@@ -19,8 +19,8 @@ const options = {
       return Promise.resolve({ description: `Movie with ID ${parameters.id} added!` });
     },
     'an existing movie exists': (parameters) => {
-      movies.insertMovie(parameters);
-      return Promise.resolve({ description: `Movie with ID ${parameters.id} added!` });
+      movies.insertMovie(parameters.EXPECTED_BODY);
+      return Promise.resolve({ description: `Movie with ID ${parameters.EXPECTED_BODY.id} added!` });
     },
   }
 }

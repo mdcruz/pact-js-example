@@ -1,17 +1,19 @@
 const { ApolloClient, InMemoryCache, gql, HttpLink } = require('@apollo/client');
 
-const client = new ApolloClient({
+const createClient = (uri) => new ApolloClient({
   cache: new InMemoryCache({
     addTypename: false,
   }),
   link: new HttpLink({
     fetch: require('node-fetch'),
-    uri: 'http://127.0.0.1:4000/graphql',
+    uri,
   }),
 });
 
-const getMovies = async () => {
-  const response = await client
+const client = createClient('http://127.0.0.1:4000/graphql');
+
+const getMovies = async (uri) => {
+  const response = await (uri ? createClient(uri) : client)
     .query({
       query: gql`
         query MoviesQuery {
@@ -23,14 +25,13 @@ const getMovies = async () => {
         }
       `,
     })
-    .then((result) => result.data)
-    .catch((err) => err.response);
+    .then((result) => result.data);
 
   return response;
 };
 
-const getMovieById = async (movieId) => {
-  const response = await client
+const getMovieById = async (movieId, uri) => {
+  const response = await (uri ? createClient(uri) : client)
     .query({
       query: gql`
         query MovieQuery($movieId: Int!) {
@@ -45,8 +46,7 @@ const getMovieById = async (movieId) => {
         movieId,
       },
     })
-    .then((result) => result.data)
-    .catch((err) => err.response);
+    .then((result) => result.data);
 
   return response;
 };

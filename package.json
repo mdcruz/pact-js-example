@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:web:consumer": "jest consumer-web/consumer-contract.spec.js",
-    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=1.0.3 --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN",
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version=$GITHUB_SHA --tag=main --broker-base-url=$PACT_BROKER_BASE_URL --broker-token=$PACT_BROKER_TOKEN",
     "start:provider": "cross-env PORT=3001 node provider/provider-service.js",
     "test:provider": "jest provider/provider-contract.spec.js --testTimeout=20000 --forceExit",
     "start:graphql:server": "npm run start:provider & node graphql/provider/graphql-server.js",

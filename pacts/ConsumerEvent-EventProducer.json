@@ -1,0 +1,53 @@
+{
+  "consumer": {
+    "name": "ConsumerEvent"
+  },
+  "messages": [
+    {
+      "contents": {
+        "name": "The World's End",
+        "year": "2013"
+      },
+      "description": "a movie add event",
+      "matchingRules": {
+        "body": {
+          "$.name": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.year": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "contentType": "application/json",
+        "topic": "movies"
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "17.1.4"
+    },
+    "pactRust": {
+      "ffi": "0.5.8",
+      "models": "1.3.16"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "EventProducer"
+  }
+}

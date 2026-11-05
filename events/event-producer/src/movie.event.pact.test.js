@@ -12,10 +12,10 @@ describe('Event producer tests', () => {
         contentType: 'application/json'
       }),
     },
-    logLevel: 'info',
+    logLevel: 'debug',
     provider: 'EventProducer',
-    providerVersion: process.env.GITHUB_SHA,
-    providerVersionBranch: process.env.GITHUB_BRANCH,
+    providerVersion:"1.0.0",
+    providerVersionBranch: "main",
     consumerVersionSelectors: [
       { mainBranch: true },
       { matchingBranch: true },
@@ -23,7 +23,7 @@ describe('Event producer tests', () => {
     ],
     pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
     pactBrokerToken: process.env.PACT_BROKER_TOKEN,
-    pactUrls: [process.env.PACT_BROKER_BASE_URL],
+    // pactUrls: [process.env.PACT_BROKER_BASE_URL],
     publishVerificationResult: true,
   });
 

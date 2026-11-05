@@ -32,8 +32,8 @@ jobs:
         run: npm run can:i:deploy:provider
       - name: Can I deploy GraphQL provider?
         run: npm run can:i:deploy:graphql:provider
-      - name: Record provider deployment
-        run: npm run record:provider:deployment
+      # - name: Record provider deployment
+      #   run: npm run record:provider:deployment
       - name: Record GraphQL provider deployment
         run: npm run record:graphql:provider:deployment
       - name: Can I deploy web consumer?
